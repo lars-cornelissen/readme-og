@@ -16,9 +16,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Dogfood the composite action defined in this repo's action.yml
-      - uses: ./
+      - uses: actions/setup-node@v4
         with:
-          theme: paper
-          out-dir: assets
-          commit: 'true'
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate SVG + PNG
+        run: |
+          mkdir -p assets
+          node src/cli.js \
+            --repo "${{ github.repository }}" \
+            --fetch \
+            --theme paper \
+            --out assets/og.svg
+          node scripts/render-png.js assets/og.svg assets/og.png
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/og.svg assets/og.png
+          git diff --cached --quiet || git commit -m "chore: regenerate OG image [skip ci]"
+          git push
