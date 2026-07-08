@@ -1,0 +1,29 @@
+{
+  "name": "readme-og",
+  "version": "0.1.0",
+  "description": "Generate hand-drawn style Open Graph social preview SVGs for your GitHub repos",
+  "type": "module",
+  "bin": {
+    "readme-og": "./src/cli.js"
+  },
+  "main": "./src/generate.js",
+  "scripts": {
+    "demo": "node src/cli.js --repo octocat/hello-world --description 'My first repository on GitHub!' --language JavaScript --stars 2547 --out demo.svg"
+  },
+  "keywords": [
+    "og-image",
+    "open-graph",
+    "social-preview",
+    "svg",
+    "github",
+    "hand-drawn",
+    "xkcd"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

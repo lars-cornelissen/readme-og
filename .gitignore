@@ -1,0 +1,7 @@
+node_modules/
+.fonts/
+demo*.svg
+og.svg
+og.png
+!assets/og.svg
+!assets/og.png

@@ -1,0 +1,24 @@
+name: Generate OG image
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'assets/og.*' # avoid infinite loop on the bot's own commit
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  og-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Dogfood the composite action defined in this repo's action.yml
+      - uses: ./
+        with:
+          theme: paper
+          out-dir: assets
+          commit: 'true'
